@@ -14,44 +14,65 @@ datasource db {
 }
 
 model Marca {
-  id      Int     @id @default(autoincrement())
-  nome    String  @db.VarChar(30)
-  tenis   Tenis[]
+  id    Int     @id @default(autoincrement())
+  nome  String  @db.VarChar(30)
+  tenis Tenis[]
+
   @@map("marcas")
 }
 
 model Tenis {
-  id          Int      @id @default(autoincrement())
-  modelo      String   @db.VarChar(60)
-  tamanho     Int      @db.SmallInt
-  preco       Decimal  @db.Decimal(10, 2)
-  cor         String   @db.VarChar(30)
-  destaque    Boolean  @default(true)
-  foto        String
-  descricao   String?  @db.VarChar(255)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  marca       Marca    @relation(fields: [marcaId], references: [id])
-  marcaId     Int
-  fotos       Foto[]
+  id        Int       @id @default(autoincrement())
+  modelo    String    @db.VarChar(60)
+  tamanho   Int       @db.SmallInt
+  preco     Decimal   @db.Decimal(10, 2)
+  cor       String    @db.VarChar(30)
+  destaque  Boolean   @default(true)
+  foto      String
+  descricao String?   @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  marca     Marca     @relation(fields: [marcaId], references: [id])
+  marcaId   Int
+  fotos     Foto[]
+  Reserva   Reserva[]
+
   @@map("tenis")
 }
 
 model Foto {
-  id          Int     @id @default(autoincrement())
-  descricao   String  @db.VarChar(30)
-  codigoFoto  String  @db.LongText
-  tenis       Tenis   @relation(fields: [tenisId], references: [id])
-  tenisId     Int
+  id         Int    @id @default(autoincrement())
+  descricao  String @db.VarChar(30)
+  codigoFoto String @db.LongText
+  tenis      Tenis  @relation(fields: [tenisId], references: [id])
+  tenisId    Int
+
   @@map("fotos")
 }
 
 model Cliente {
-  id        String   @db.VarChar(36) @id @default(uuid())
-  nome      String   @db.VarChar(60)
-  email     String   @db.VarChar(60) @unique
-  senha     String   @db.VarChar(60)   // senha deve ser varchar(60)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  nome      String    @db.VarChar(60)
+  email     String    @unique @db.VarChar(60)
+  senha     String    @db.VarChar(60) // senha deve ser varchar(60)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Reserva   Reserva[]
+
   @@map("clientes")
+}
+
+model Reserva {
+  id         Int      @id @default(autoincrement())
+  cliente    Cliente  @relation(fields: [clienteId], references: [id])
+  clienteId  String // Referencia o cliente que fez a reserva
+  tenis      Tenis    @relation(fields: [tenisId], references: [id])
+  tenisId    Int // Referencia o tênis reservado
+  dataInicio DateTime // Data de início da reserva
+  dataFim    DateTime // Data de término da reserva
+  status     String   @default("ativa") // Status da reserva (ativa, concluída, cancelada)
+  createdAt  DateTime @default(now()) // Data de criação da reserva
+  updatedAt  DateTime @updatedAt // Data da última atualização da reserva
+
+  @@map("reservas")
 }
