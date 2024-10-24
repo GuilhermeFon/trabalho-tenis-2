@@ -140,7 +140,7 @@ export default function Detalhes() {
             </>
           ) : (
             <h3 className="text-xl font-bold tracking-tight text-orange-700 dark:text-white">
-              ** Faça login para fazer a proposta deste tênis
+              ** Faça login para fazer a reserva deste tênis
             </h3>
           )}
         </div>
