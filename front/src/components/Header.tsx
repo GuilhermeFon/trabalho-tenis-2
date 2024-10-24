@@ -31,12 +31,14 @@ export function Header() {
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
           {cliente.id ? (
             <>
-              <span className="text-black">{cliente.nome}</span>
+              <span className="text-black dark: text-white">
+                {cliente.nome}
+              </span>
               <Link
-                href="/pedidos"
+                href="/reservas"
                 className="font-bold text-blue-600 dark:text-blue-500 hover:underline"
               >
-                Meus Pedidos
+                Minhas Reservas
               </Link>
               <span
                 className="cursor-pointer font-bold text-blue-600 dark:text-blue-500 hover:underline"

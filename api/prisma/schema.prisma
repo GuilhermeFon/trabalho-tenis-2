@@ -84,7 +84,7 @@ model Proposta {
   clienteId   String    @db.VarChar(36)
   tenis       Tenis     @relation(fields: [tenisId], references: [id])
   tenisId     Int
-  descricao   String    @db.VarChar(255)
+  tamanho     Int
   resposta    String?   @db.VarChar(255)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt  

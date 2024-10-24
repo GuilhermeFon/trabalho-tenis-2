@@ -51,7 +51,7 @@ CREATE TABLE `propostas` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `clienteId` VARCHAR(36) NOT NULL,
     `tenisId` INTEGER NOT NULL,
-    `descricao` VARCHAR(255) NOT NULL,
+    `tamanho` INTEGER NOT NULL,
     `resposta` VARCHAR(255) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
