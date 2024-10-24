@@ -24,7 +24,7 @@ export function Header() {
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src="./logo.png" className="h-16" alt="Logo Tênis" />
-          <span className="self-center text-3xl font-semibold whitespace-nowrap text-white dark:text-white">
+          <span className="self-center text-3xl font-semibold whitespace-nowrap text-white dark:text-white" style={{ fontFamily: "'Poppins', sans-serif", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}>
             Loja da Pegada
           </span>
         </Link>
