@@ -1,10 +1,10 @@
-import { CarroI } from "./tenis"
+import { TenisI } from "./tenis"
 
 export interface PropostaI {
   id: number
   clienteId: string
-  carroId: number
-  carro: CarroI
+  tenisId: number
+  tenis: TenisI
   descricao: string
   resposta: string | null
   createdAt: string
