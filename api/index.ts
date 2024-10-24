@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import marcasRoutes from './routes/marcas'
-import carrosRoutes from './routes/carros'
+import sapatosRoutes from './routes/tenis'
 import fotosRoutes from './routes/fotos'
 import clientesRoutes from './routes/clientes'
 import propostasRoutes from './routes/propostas'
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use("/marcas", marcasRoutes)
-app.use("/carros", carrosRoutes)
+app.use("/sapatos", sapatosRoutes)
 app.use("/fotos", fotosRoutes)
 app.use("/clientes", clientesRoutes)
 app.use("/propostas", propostasRoutes)

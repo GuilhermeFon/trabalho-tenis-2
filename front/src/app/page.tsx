@@ -1,13 +1,13 @@
 'use client'
 import { InputPesquisa } from "@/components/InputPesquisa"
-import { ItemCarros } from "@/components/itemTenis";
-import { CarroI } from "@/utils/types/tenis";
+import { ItemTenis } from "@/components/itemTenis";
+import { TenisI } from "@/utils/types/tenis";
 import { useEffect, useState } from "react";
 import { Toaster } from 'sonner'
 import { useClienteStore } from "@/context/cliente";
 
 export default function Home() {
-  const [carros, setCarros] = useState<CarroI[]>([])
+  const [tenis, setTenis] = useState<TenisI[]>([])
   const { logaCliente } = useClienteStore()
 
   useEffect(() => {
@@ -26,27 +26,26 @@ export default function Home() {
     }
 
     async function buscaDados() {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/carros`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sapatos`) 
       const dados = await response.json()
-      // console.log(dados)
-      setCarros(dados)
+      setTenis(dados) 
     }
     buscaDados()
   }, [])
 
-  const listaCarros = carros.map( carro => (
-    <ItemCarros data={carro} key={carro.id} />
+  const listaTenis = tenis.map(tenis => ( // Alterado para listaTenis
+    <ItemTenis data={tenis} key={tenis.id} /> // Alterado para tenis
   ))
 
   return (
     <main>
-      <InputPesquisa setCarros={setCarros} />
+      <InputPesquisa setTenis={setTenis} /> 
 
       <section className="max-w-screen-xl mx-auto">
-        <h1 className="mb-5 mt-2 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black">Veículos <span className="underline underline-offset-3 decoration-8 decoration-orange-400 dark:decoration-orange-600">em destaque</span></h1>
+        <h1 className="mb-5 mt-2 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black">Tênis <span className="underline underline-offset-3 decoration-8 decoration-orange-400 dark:decoration-orange-600">em destaque</span></h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {listaCarros}
+          {listaTenis} {/* Alterado para listaTenis */}
         </div>
 
       </section>

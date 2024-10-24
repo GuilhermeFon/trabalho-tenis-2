@@ -20,7 +20,7 @@ export function InputPesquisa({setTenis}: InputPesquisaProps) {
       return;
     }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/tenis/pesquisa/${data.termo}`
+      `${process.env.NEXT_PUBLIC_URL_API}/sapatos/pesquisa/${data.termo}`
     ); // Alterado o endpoint para "tenis"
     const dados = await response.json();
     if (dados.length == 0) {
@@ -32,7 +32,7 @@ export function InputPesquisa({setTenis}: InputPesquisaProps) {
   }
 
   async function mostraDestaques() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/tenis`); // Alterado o endpoint para "tenis"
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sapatos`); // Alterado o endpoint para "tenis"
     const dados = await response.json();
     setTenis(dados); // Ajustado para tênis
     reset({termo: ""});

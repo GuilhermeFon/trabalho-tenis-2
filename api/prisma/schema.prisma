@@ -14,10 +14,9 @@ datasource db {
 }
 
 model Marca {
-  id    Int     @id @default(autoincrement())
-  nome  String  @db.VarChar(30)
-  tenis Tenis[]
-
+  id        Int      @id @default(autoincrement())
+  nome      String   @db.VarChar(30)
+  sapatos    Tenis[]
   @@map("marcas")
 }
 
@@ -35,9 +34,9 @@ model Tenis {
   marca     Marca     @relation(fields: [marcaId], references: [id])
   marcaId   Int
   fotos     Foto[]
-  Reserva   Reserva[]
+  Proposta   Proposta[]
 
-  @@map("tenis")
+  @@map("sapatos")
 }
 
 model Foto {
@@ -57,22 +56,37 @@ model Cliente {
   senha     String    @db.VarChar(60) // senha deve ser varchar(60)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Reserva   Reserva[]
+  Proposta   Proposta[]
 
   @@map("clientes")
 }
 
-model Reserva {
-  id         Int      @id @default(autoincrement())
-  cliente    Cliente  @relation(fields: [clienteId], references: [id])
-  clienteId  String // Referencia o cliente que fez a reserva
-  tenis      Tenis    @relation(fields: [tenisId], references: [id])
-  tenisId    Int // Referencia o tênis reservado
-  dataInicio DateTime // Data de início da reserva
-  dataFim    DateTime // Data de término da reserva
-  status     String   @default("ativa") // Status da reserva (ativa, concluída, cancelada)
-  createdAt  DateTime @default(now()) // Data de criação da reserva
-  updatedAt  DateTime @updatedAt // Data da última atualização da reserva
+// model Reserva {
+//   id         Int      @id @default(autoincrement())
+//   cliente    Cliente  @relation(fields: [clienteId], references: [id])
+//   clienteId  String // Referencia o cliente que fez a reserva
+//   tenis      Tenis    @relation(fields: [tenisId], references: [id])
+//   tenisId    Int // Referencia o tênis reservado
+//   dataInicio DateTime // Data de início da reserva
+//   dataFim    DateTime // Data de término da reserva
+//   status     String   @default("ativa") // Status da reserva (ativa, concluída, cancelada)
+//   createdAt  DateTime @default(now()) // Data de criação da reserva
+//   updatedAt  DateTime @updatedAt // Data da última atualização da reserva
+//   descricao  String @db.VarChar(30)
+//   resposta  String @db.VarChar(30)
 
-  @@map("reservas")
+//   @@map("reservas")
+// }
+
+model Proposta {
+  id          Int       @id @default(autoincrement())
+  cliente     Cliente   @relation(fields: [clienteId], references: [id])
+  clienteId   String    @db.VarChar(36)
+  tenis       Tenis     @relation(fields: [tenisId], references: [id])
+  tenisId     Int
+  descricao   String    @db.VarChar(255)
+  resposta    String?   @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt  
+  @@map("propostas")
 }

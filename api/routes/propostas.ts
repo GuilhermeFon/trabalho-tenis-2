@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const propostas = await prisma.proposta.findMany({
       include: {
         cliente: true,
-        carro: true
+        tenis: true
       }
     })
     res.status(200).json(propostas)
@@ -20,16 +20,16 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  const { clienteId, carroId, descricao } = req.body
+  const { clienteId, tenisId, descricao } = req.body
 
-  if (!clienteId || !carroId || !descricao) {
-    res.status(400).json({ erro: "Informe clienteId, carroId e descricao" })
+  if (!clienteId || !tenisId || !descricao) {
+    res.status(400).json({ erro: "Informe clienteId, tenisId e descricao" })
     return
   }
 
   try {
     const proposta = await prisma.proposta.create({
-      data: { clienteId, carroId, descricao }
+      data: { clienteId, tenisId, descricao }
     })
     res.status(201).json(proposta)
   } catch (error) {
@@ -104,7 +104,7 @@ router.get("/:clienteId", async (req, res) => {
     const propostas = await prisma.proposta.findMany({
       where: { clienteId },
       include: {
-        carro: true
+        tenis: true
       }
     })
     res.status(200).json(propostas)

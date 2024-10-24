@@ -25,7 +25,7 @@ export function Header() {
         >
           <img src="./logo.webp" className="h-16" alt="Logo Loja de Tênis" />
           <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">
-            Tênis Avenida
+            Loja da Pegada
           </span>
         </Link>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">

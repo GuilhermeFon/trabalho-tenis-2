@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useClienteStore } from "@/context/cliente";
 import { PropostaI } from "@/utils/types/propostas";
 
-export default function Propostas() {
+export default function propostas() {
   const [propostas, setPropostas] = useState<PropostaI[]>([])
   const { cliente } = useClienteStore()
 
@@ -29,10 +29,10 @@ export default function Propostas() {
   const propostasTable = propostas.map(proposta => (
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        {proposta.carro.modelo}
+        {proposta.tenis.modelo}
       </th>
       <td className="px-6 py-4">
-        <img src={proposta.carro.foto} className="fotoCarro" alt="Foto Carro" />
+        <img src={proposta.tenis.foto} className="fotoTenis" alt="Foto Tenis" />
       </td>
       <td className="px-6 py-4">
         <p><b>{proposta.descricao}</b></p>

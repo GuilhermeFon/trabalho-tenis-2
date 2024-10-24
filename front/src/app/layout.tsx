@@ -4,9 +4,9 @@ import { Header } from "@/components/Header";
 import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
-  title: "Revenda Avenida",
-  description: "Revenda de carros usados em Pelotas - RS",
-  keywords: ['revenda', 'carros', 'veículos', 'carros usados']
+  title: "Loja da Pegada",
+  description: "Loja de tenis em Pelotas - RS",
+  keywords: ['loja', 'tenis', 'sapatos']
 };
 
 export default function RootLayout({

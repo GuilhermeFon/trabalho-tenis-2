@@ -1,4 +1,4 @@
-import { TenisI } from "@/utils/types/tenis"; // Alterado para refletir o tipo de tênis
+import { TenisI } from "@/utils/types/tenis"; 
 import Link from "next/link";
 
 export function ItemTenis({ data }: { data: TenisI }) { // Alterado para "ItemTenis" e "TenisI"
