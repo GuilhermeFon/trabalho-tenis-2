@@ -17,14 +17,14 @@ export function Header() {
   }
 
   return (
-    <nav className="bg-orange-400 border-gray-200 dark:bg-gray-900">
+    <nav className="bg-blue-900 border-gray-200 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
         <Link
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="./logo.webp" className="h-16" alt="Logo Loja de Tênis" />
-          <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">
+          <img src="./logo.png" className="h-16" alt="Logo Tênis" />
+          <span className="self-center text-3xl font-semibold whitespace-nowrap text-white dark:text-white">
             Loja da Pegada
           </span>
         </Link>
@@ -49,7 +49,7 @@ export function Header() {
             <>
               <Link
                 href="/login"
-                className="font-bold text-blue-600 dark:text-blue-500 hover:underline"
+                className="font-bold text-blue-400 dark:text-blue-500 hover:underline"
               >
                 Entrar
               </Link>

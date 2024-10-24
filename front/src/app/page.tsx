@@ -42,7 +42,7 @@ export default function Home() {
       <InputPesquisa setTenis={setTenis} /> 
 
       <section className="max-w-screen-xl mx-auto">
-        <h1 className="mb-5 mt-2 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black">Tênis <span className="underline underline-offset-3 decoration-8 decoration-orange-400 dark:decoration-orange-600">em destaque</span></h1>
+        <h1 className="mb-5 mt-2 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-black">Tênis <span className="underline underline-offset-3 decoration-8 decoration-blue-900 dark:decoration-blue-400">em destaque</span></h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {listaTenis} {/* Alterado para listaTenis */}
