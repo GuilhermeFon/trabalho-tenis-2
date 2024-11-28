@@ -9,65 +9,84 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Marca {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(30)
-  carros    Carro[]
+  sapatos    Tenis[]
   @@map("marcas")
 }
 
-model Carro {
-  id          Int          @id @default(autoincrement())
-  modelo      String       @db.VarChar(60)
-  ano         Int          @db.SmallInt
-  preco       Decimal      @db.Decimal(10, 2)
-  km          Int          
-  destaque    Boolean      @default(true)
-  foto        String   
-  acessorios  String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  combustivel Combustiveis @default(FLEX)
-  marca       Marca        @relation(fields: [marcaId], references: [id])
-  marcaId     Int
-  admin       Admin        @relation(fields: [adminId], references: [id])
-  adminId     Int          @default(1)
-  fotos       Foto[]
-  propostas   Proposta[]
-  @@map("carros")
+model Tenis {
+  id        Int       @id @default(autoincrement())
+  modelo    String    @db.VarChar(60)
+  tamanho   Int       @db.SmallInt
+  preco     Decimal   @db.Decimal(10, 2)
+  cor       String    @db.VarChar(30)
+  destaque  Boolean   @default(true)
+  foto      String
+  descricao String?   @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  marca     Marca     @relation(fields: [marcaId], references: [id])
+  marcaId   Int
+  admin     Admin     @relation(fields: [adminId], references: [id])
+  adminId   Int       @default(1)
+  fotos     Foto[]
+  Proposta  Proposta[]
+
+  @@map("sapatos")
 }
 
 model Foto {
-  id          Int      @id @default(autoincrement())
-  descricao   String   @db.VarChar(30)
-  codigoFoto  String   @db.Text
-  carro       Carro    @relation(fields: [carroId], references: [id])
-  carroId     Int
+  id         Int    @id @default(autoincrement())
+  descricao  String @db.VarChar(30)
+  codigoFoto String @db.LongText
+  tenis      Tenis  @relation(fields: [tenisId], references: [id])
+  tenisId    Int
+
   @@map("fotos")
 }
 
 model Cliente {
-  id           String   @db.VarChar(36) @id @default(uuid())
-  nome         String   @db.VarChar(60)
-  email        String   @db.VarChar(60) @unique
-  senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt  
-  propostas    Proposta[]
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  nome      String    @db.VarChar(60)
+  email     String    @unique @db.VarChar(60)
+  senha     String    @db.VarChar(60) // senha deve ser varchar(60)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Proposta   Proposta[]
+
   @@map("clientes")
 }
+
+// model Reserva {
+//   id         Int      @id @default(autoincrement())
+//   cliente    Cliente  @relation(fields: [clienteId], references: [id])
+//   clienteId  String // Referencia o cliente que fez a reserva
+//   tenis      Tenis    @relation(fields: [tenisId], references: [id])
+//   tenisId    Int // Referencia o tênis reservado
+//   dataInicio DateTime // Data de início da reserva
+//   dataFim    DateTime // Data de término da reserva
+//   status     String   @default("ativa") // Status da reserva (ativa, concluída, cancelada)
+//   createdAt  DateTime @default(now()) // Data de criação da reserva
+//   updatedAt  DateTime @updatedAt // Data da última atualização da reserva
+//   descricao  String @db.VarChar(30)
+//   resposta  String @db.VarChar(30)
+
+//   @@map("reservas")
+// }
 
 model Proposta {
   id          Int       @id @default(autoincrement())
   cliente     Cliente   @relation(fields: [clienteId], references: [id])
   clienteId   String    @db.VarChar(36)
-  carro       Carro     @relation(fields: [carroId], references: [id])
-  carroId     Int
-  descricao   String    @db.VarChar(255)
+  tenis       Tenis     @relation(fields: [tenisId], references: [id])
+  tenisId     Int
+  tamanho     Int
   resposta    String?   @db.VarChar(255)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt  
@@ -81,14 +100,6 @@ model Admin {
   senha        String   @db.VarChar(60)   // senha deve ser varchar(60)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt  
-  carros       Carro[]
+  sapatos       Tenis[]
   @@map("admins")
-}
-
-enum Combustiveis {
-  FLEX
-  GASOLINA
-  ALCOOL
-  DIESEL
-  ELETRICIDADE
 }
