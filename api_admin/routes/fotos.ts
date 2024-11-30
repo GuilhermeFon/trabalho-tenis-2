@@ -34,12 +34,12 @@ prisma.$on('query', (e) => {
 
 const router = Router()
 
-router.get("/:carroId", async (req, res) => {
-  const { carroId } = req.params
+router.get("/:tenisId", async (req, res) => {
+  const { tenisId } = req.params
 
   try {
     const fotos = await prisma.foto.findMany({
-      where: { carroId: Number(carroId) }
+      where: { tenisId: Number(tenisId) }
     })
     res.status(200).json(fotos)
   } catch (error) {
@@ -48,18 +48,18 @@ router.get("/:carroId", async (req, res) => {
 })
 
 router.post("/", upload.single('codigoFoto'), async (req, res) => {
-  const { descricao, carroId } = req.body
+  const { descricao, tenisId } = req.body
   const codigo = req.file?.buffer.toString("base64")
 
-  if (!descricao || !carroId || !codigo) {
-    res.status(400).json({ "erro": "Informe descricao, carroId e codigoFoto" })
+  if (!descricao || !tenisId || !codigo) {
+    res.status(400).json({ "erro": "Informe descricao, tenisId e codigoFoto" })
     return
   }
 
   try {
     const foto = await prisma.foto.create({
       data: {
-        descricao, carroId: Number(carroId),
+        descricao, tenisId: Number(tenisId),
         codigoFoto: codigo as string
       }
     })

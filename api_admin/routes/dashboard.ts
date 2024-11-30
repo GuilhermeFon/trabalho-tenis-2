@@ -7,36 +7,36 @@ const router = Router()
 router.get("/gerais", async (req, res) => {
   try {
     const clientes = await prisma.cliente.count()
-    const carros = await prisma.carro.count()
+    const sapatos = await prisma.tenis.count()
     const propostas = await prisma.proposta.count()
-    res.status(200).json({ clientes, carros, propostas })
+    res.status(200).json({ clientes, sapatos, propostas })
   } catch (error) {
     res.status(400).json(error)
   }
 })
 
-router.get("/carrosMarca", async (req, res) => {
+router.get("/sapatosMarca", async (req, res) => {
   try {
-    const carros = await prisma.carro.groupBy({
+    const sapatos = await prisma.tenis.groupBy({
       by: ['marcaId'],
       _count: {
         id: true, 
       }
     })
 
-    // Para cada carro, inclui o nome da marca relacionada ao marcaId
-    const carrosMarca = await Promise.all(
-      carros.map(async (carro) => {
+    // Para cada tenis, inclui o nome da marca relacionada ao marcaId
+    const sapatosMarca = await Promise.all(
+      sapatos.map(async (tenis) => {
         const marca = await prisma.marca.findUnique({
-          where: { id: carro.marcaId }
+          where: { id: tenis.marcaId }
         })
         return {
           marca: marca?.nome, 
-          num: carro._count.id
+          num: tenis._count.id
         }
       })
     )
-    res.status(200).json(carrosMarca)
+    res.status(200).json(sapatosMarca)
   } catch (error) {
     res.status(400).json(error)
   }

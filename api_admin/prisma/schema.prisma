@@ -16,7 +16,7 @@ datasource db {
 model Marca {
   id        Int      @id @default(autoincrement())
   nome      String   @db.VarChar(30)
-  sapatos    Tenis[]
+  sapatos   Tenis[]
   @@map("marcas")
 }
 

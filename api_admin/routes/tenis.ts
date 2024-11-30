@@ -1,23 +1,40 @@
 import {PrismaClient} from "@prisma/client";
 import {Router} from "express";
+import {verificaToken} from "../middewares/verificaToken";
 
 const prisma = new PrismaClient();
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const tenis = await prisma.tenis.findMany({
+    const sapatos = await prisma.tenis.findMany({
+      orderBy: {id: "desc"},
       include: {
         marca: true,
       },
     });
-    res.status(200).json(tenis);
+    res.status(200).json(sapatos);
   } catch (error) {
     res.status(400).json(error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.get("/destaques", async (req, res) => {
+  try {
+    const sapatos = await prisma.tenis.findMany({
+      orderBy: {id: "desc"},
+      include: {
+        marca: true,
+      },
+      where: {destaque: true},
+    });
+    res.status(200).json(sapatos);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+router.post("/", verificaToken, async (req, res) => {
   const {modelo, tamanho, preco, cor, foto, descricao, marcaId} = req.body;
 
   if (
@@ -45,7 +62,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verificaToken, async (req, res) => {
   const {id} = req.params;
 
   try {
@@ -58,7 +75,26 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/destacar/:id", verificaToken, async (req, res) => {
+  const {id} = req.params;
+
+  try {
+    const tenisDestacar = await prisma.tenis.findUnique({
+      where: {id: Number(id)},
+      select: {destaque: true},
+    });
+
+    const tenis = await prisma.tenis.update({
+      where: {id: Number(id)},
+      data: {destaque: !tenisDestacar?.destaque},
+    });
+    res.status(200).json(tenis);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+router.put("/:id", verificaToken, async (req, res) => {
   const {id} = req.params;
   const {modelo, tamanho, preco, cor, foto, descricao, marcaId} = req.body;
 
@@ -97,7 +133,7 @@ router.get("/pesquisa/:termo", async (req, res) => {
   // se a conversão gerou um NaN (Not a Number)
   if (isNaN(termoNumero)) {
     try {
-      const tenis = await prisma.tenis.findMany({
+      const sapatos = await prisma.tenis.findMany({
         include: {
           marca: true,
         },
@@ -105,13 +141,13 @@ router.get("/pesquisa/:termo", async (req, res) => {
           OR: [{modelo: {contains: termo}}, {marca: {nome: termo}}],
         },
       });
-      res.status(200).json(tenis);
+      res.status(200).json(sapatos);
     } catch (error) {
       res.status(400).json(error);
     }
   } else {
     try {
-      const tenis = await prisma.tenis.findMany({
+      const sapatos = await prisma.tenis.findMany({
         include: {
           marca: true,
         },
@@ -119,7 +155,7 @@ router.get("/pesquisa/:termo", async (req, res) => {
           OR: [{preco: {lte: termoNumero}}, {tamanho: termoNumero}],
         },
       });
-      res.status(200).json(tenis);
+      res.status(200).json(sapatos);
     } catch (error) {
       res.status(400).json(error);
     }
