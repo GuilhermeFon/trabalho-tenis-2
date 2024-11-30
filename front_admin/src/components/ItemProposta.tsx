@@ -17,7 +17,9 @@ interface listaPropostaProps {
 
 function ItemProposta({proposta, propostas, setPropostas}: listaPropostaProps) {
   async function excluirProposta() {
-    if (confirm(`Confirma Exclusão da Reserva de "${proposta.cliente.nome}"?`)) {
+    if (
+      confirm(`Confirma Exclusão da Reserva de "${proposta.cliente.nome}"?`)
+    ) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL_API}/propostas/${proposta.id}`,
         {

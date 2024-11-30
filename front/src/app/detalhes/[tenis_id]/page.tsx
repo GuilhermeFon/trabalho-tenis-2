@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import {TenisI} from "@/utils/types/tenis";
 import {FotoI} from "@/utils/types/fotos";
@@ -17,7 +18,7 @@ export default function Detalhes() {
 
   const [tenis, setTenis] = useState<TenisI>(); // Estado para armazenar os dados do tênis
   const [fotos, setFotos] = useState<FotoI[]>([]); // Estado para armazenar as fotos do tênis
-  const [tamanho, setTamanho] = useState(0); // Estado para armazenar o tamanho selecionado
+  const [tamanho, setTamanho] = useState(34); // Estado para armazenar o tamanho selecionado
 
   const {register, handleSubmit, reset} = useForm<Inputs>();
 

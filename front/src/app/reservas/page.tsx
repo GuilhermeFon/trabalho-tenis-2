@@ -1,10 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import "./page.css";
 import {useEffect, useState} from "react";
 import {useClienteStore} from "@/context/cliente";
 import {PropostaI} from "@/utils/types/propostas";
 
-export default function propostas() {
+export default function Propostas() {
   const [propostas, setPropostas] = useState<PropostaI[]>([]);
   const {cliente} = useClienteStore();
 
@@ -17,7 +18,7 @@ export default function propostas() {
       setPropostas(dados);
     }
     buscaDados();
-  }, []);
+  }, [cliente.id]);
 
   // para retornar apenas a data do campo no banco de dados
   // 2024-10-10T22:46:27.227Z => 10/10/2024
@@ -32,6 +33,7 @@ export default function propostas() {
     return (
       <tr
         id={String(proposta.id)}
+        key={proposta.id}
         className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
       >
         <th
@@ -55,6 +57,11 @@ export default function propostas() {
         <td className="px-6 py-4">
           <p>
             <i>Reservado em: {dataDMA(proposta.createdAt)}</i>
+          </p>
+        </td>
+        <td className="px-6 py-4">
+          <p>
+            <b>{proposta.resposta}</b>
           </p>
         </td>
       </tr>
@@ -84,6 +91,9 @@ export default function propostas() {
             </th>
             <th scope="col" className="px-6 py-3">
               Reserva
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Resposta da Loja
             </th>
           </tr>
         </thead>
