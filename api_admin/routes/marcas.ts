@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client"
-import { Router } from "express"
+import {PrismaClient} from "@prisma/client";
+import {Router} from "express";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 // const prisma = new PrismaClient({
 //   log: [
 //     {
@@ -29,68 +29,68 @@ const prisma = new PrismaClient()
 //   console.log('Duration: ' + e.duration + 'ms')
 // })
 
-const router = Router()
+const router = Router();
 
 router.get("/", async (req, res) => {
   try {
     const marcas = await prisma.marca.findMany({
-      orderBy: { nome: 'asc' }
-    })
-    res.status(200).json(marcas)
+      orderBy: {nome: "asc"},
+    });
+    res.status(200).json(marcas);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 router.post("/", async (req, res) => {
-  const { nome } = req.body
+  const {nome} = req.body;
 
   if (!nome) {
-    res.status(400).json({ "erro": "Informe o nome da marca" })
-    return
+    res.status(400).json({erro: "Informe o nome da marca"});
+    return;
   }
 
   try {
     const marca = await prisma.marca.create({
-      data: { nome }
-    })
-    res.status(201).json(marca)
+      data: {nome},
+    });
+    res.status(201).json(marca);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params
+  const {id} = req.params;
 
   try {
     const marca = await prisma.marca.delete({
-      where: { id: Number(id) }
-    })
-    res.status(200).json(marca)
+      where: {id: Number(id)},
+    });
+    res.status(200).json(marca);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 router.put("/:id", async (req, res) => {
-  const { id } = req.params
-  const { nome } = req.body
+  const {id} = req.params;
+  const {nome} = req.body;
 
   if (!nome) {
-    res.status(400).json({ "erro": "Informe o nome da marca" })
-    return
+    res.status(400).json({erro: "Informe o nome da marca"});
+    return;
   }
 
   try {
     const marca = await prisma.marca.update({
-      where: { id: Number(id) },
-      data: { nome }
-    })
-    res.status(200).json(marca)
+      where: {id: Number(id)},
+      data: {nome},
+    });
+    res.status(200).json(marca);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
-export default router
+export default router;

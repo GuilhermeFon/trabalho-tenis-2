@@ -95,7 +95,7 @@ router.patch("/:id", async (req, res) => {
     enviaEmail(
       dados?.cliente.nome as string,
       dados?.cliente.email as string,
-      dados?.tamanho ? dados.tamanho.toString() : "",
+      String(dados?.tamanho),
       resposta
     );
 

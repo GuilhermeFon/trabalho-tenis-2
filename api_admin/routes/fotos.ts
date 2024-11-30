@@ -1,105 +1,106 @@
-import { PrismaClient } from "@prisma/client"
-import { Router } from "express"
-import multer from 'multer'
+import {PrismaClient} from "@prisma/client";
+import {Router} from "express";
+import multer from "multer";
 
-const upload = multer({ storage: multer.memoryStorage() })
+const upload = multer({storage: multer.memoryStorage()});
 
 // const prisma = new PrismaClient()
 const prisma = new PrismaClient({
   log: [
     {
-      emit: 'event',
-      level: 'query',
+      emit: "event",
+      level: "query",
     },
     {
-      emit: 'stdout',
-      level: 'error',
+      emit: "stdout",
+      level: "error",
     },
     {
-      emit: 'stdout',
-      level: 'info',
+      emit: "stdout",
+      level: "info",
     },
     {
-      emit: 'stdout',
-      level: 'warn',
+      emit: "stdout",
+      level: "warn",
     },
   ],
-})
+});
 
-prisma.$on('query', (e) => {
-  console.log('Query: ' + e.query)
-  console.log('Params: ' + e.params)
-  console.log('Duration: ' + e.duration + 'ms')
-})
+prisma.$on("query", (e) => {
+  console.log("Query: " + e.query);
+  console.log("Params: " + e.params);
+  console.log("Duration: " + e.duration + "ms");
+});
 
-const router = Router()
+const router = Router();
 
 router.get("/:tenisId", async (req, res) => {
-  const { tenisId } = req.params
+  const {tenisId} = req.params;
 
   try {
     const fotos = await prisma.foto.findMany({
-      where: { tenisId: Number(tenisId) }
-    })
-    res.status(200).json(fotos)
+      where: {tenisId: Number(tenisId)},
+    });
+    res.status(200).json(fotos);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
-router.post("/", upload.single('codigoFoto'), async (req, res) => {
-  const { descricao, tenisId } = req.body
-  const codigo = req.file?.buffer.toString("base64")
+router.post("/", upload.single("codigoFoto"), async (req, res) => {
+  const {descricao, tenisId} = req.body;
+  const codigo = req.file?.buffer.toString("base64");
 
   if (!descricao || !tenisId || !codigo) {
-    res.status(400).json({ "erro": "Informe descricao, tenisId e codigoFoto" })
-    return
+    res.status(400).json({erro: "Informe descricao, tenisId e codigoFoto"});
+    return;
   }
 
   try {
     const foto = await prisma.foto.create({
       data: {
-        descricao, tenisId: Number(tenisId),
-        codigoFoto: codigo as string
-      }
-    })
-    res.status(201).json(foto)
+        descricao,
+        tenisId: Number(tenisId),
+        codigoFoto: codigo as string,
+      },
+    });
+    res.status(201).json(foto);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params
+  const {id} = req.params;
 
   try {
     const marca = await prisma.marca.delete({
-      where: { id: Number(id) }
-    })
-    res.status(200).json(marca)
+      where: {id: Number(id)},
+    });
+    res.status(200).json(marca);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
 router.put("/:id", async (req, res) => {
-  const { id } = req.params
-  const { nome } = req.body
+  const {id} = req.params;
+  const {nome} = req.body;
 
   if (!nome) {
-    res.status(400).json({ "erro": "Informe o nome da marca" })
-    return
+    res.status(400).json({erro: "Informe o nome da marca"});
+    return;
   }
 
   try {
     const marca = await prisma.marca.update({
-      where: { id: Number(id) },
-      data: { nome }
-    })
-    res.status(200).json(marca)
+      where: {id: Number(id)},
+      data: {nome},
+    });
+    res.status(200).json(marca);
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error);
   }
-})
+});
 
-export default router
+export default router;
