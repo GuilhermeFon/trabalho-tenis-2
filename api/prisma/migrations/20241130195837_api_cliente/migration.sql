@@ -10,7 +10,6 @@ CREATE TABLE `marcas` (
 CREATE TABLE `sapatos` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `modelo` VARCHAR(60) NOT NULL,
-    `tamanho` SMALLINT NOT NULL,
     `preco` DECIMAL(10, 2) NOT NULL,
     `cor` VARCHAR(30) NOT NULL,
     `destaque` BOOLEAN NOT NULL DEFAULT true,
@@ -19,7 +18,6 @@ CREATE TABLE `sapatos` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `marcaId` INTEGER NOT NULL,
-    `adminId` INTEGER NOT NULL DEFAULT 1,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -60,24 +58,8 @@ CREATE TABLE `propostas` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- CreateTable
-CREATE TABLE `admins` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(60) NOT NULL,
-    `email` VARCHAR(60) NOT NULL,
-    `senha` VARCHAR(60) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
-
-    UNIQUE INDEX `admins_email_key`(`email`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
 -- AddForeignKey
 ALTER TABLE `sapatos` ADD CONSTRAINT `sapatos_marcaId_fkey` FOREIGN KEY (`marcaId`) REFERENCES `marcas`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `sapatos` ADD CONSTRAINT `sapatos_adminId_fkey` FOREIGN KEY (`adminId`) REFERENCES `admins`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `fotos` ADD CONSTRAINT `fotos_tenisId_fkey` FOREIGN KEY (`tenisId`) REFERENCES `sapatos`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

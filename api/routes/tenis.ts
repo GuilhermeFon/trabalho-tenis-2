@@ -18,26 +18,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const {modelo, tamanho, preco, cor, foto, descricao, marcaId} = req.body;
+  const {modelo, preco, cor, foto, descricao, marcaId} = req.body;
 
-  if (
-    !modelo ||
-    !tamanho ||
-    !preco ||
-    !cor ||
-    !foto ||
-    !descricao ||
-    !marcaId
-  ) {
+  if (!modelo || !preco || !cor || !foto || !descricao || !marcaId) {
     res.status(400).json({
-      erro: "Informe modelo, tamanho, preco, cor, foto, descricao e marcaId",
+      erro: "Informe modelo, preco, cor, foto, descricao e marcaId",
     });
     return;
   }
 
   try {
     const tenis = await prisma.tenis.create({
-      data: {modelo, tamanho, preco, cor, foto, descricao, marcaId},
+      data: {modelo, preco, cor, foto, descricao, marcaId},
     });
     res.status(201).json(tenis);
   } catch (error) {
@@ -60,19 +52,11 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const {id} = req.params;
-  const {modelo, tamanho, preco, cor, foto, descricao, marcaId} = req.body;
+  const {modelo, preco, cor, foto, descricao, marcaId} = req.body;
 
-  if (
-    !modelo ||
-    !tamanho ||
-    !preco ||
-    !cor ||
-    !foto ||
-    !descricao ||
-    !marcaId
-  ) {
+  if (!modelo || !preco || !cor || !foto || !descricao || !marcaId) {
     res.status(400).json({
-      erro: "Informe modelo, tamanho, preco, cor, foto, descricao e marcaId",
+      erro: "Informe modelo, preco, cor, foto, descricao e marcaId",
     });
     return;
   }
@@ -80,7 +64,7 @@ router.put("/:id", async (req, res) => {
   try {
     const tenis = await prisma.tenis.update({
       where: {id: Number(id)},
-      data: {modelo, tamanho, preco, cor, foto, descricao, marcaId},
+      data: {modelo, preco, cor, foto, descricao, marcaId},
     });
     res.status(200).json(tenis);
   } catch (error) {
@@ -116,7 +100,7 @@ router.get("/pesquisa/:termo", async (req, res) => {
           marca: true,
         },
         where: {
-          OR: [{preco: {lte: termoNumero}}, {tamanho: termoNumero}],
+          OR: [{preco: {lte: termoNumero}}],
         },
       });
       res.status(200).json(tenis);

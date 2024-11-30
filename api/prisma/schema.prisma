@@ -23,7 +23,6 @@ model Marca {
 model Tenis {
   id        Int       @id @default(autoincrement())
   modelo    String    @db.VarChar(60)
-  tamanho   Int       @db.SmallInt
   preco     Decimal   @db.Decimal(10, 2)
   cor       String    @db.VarChar(30)
   destaque  Boolean   @default(true)

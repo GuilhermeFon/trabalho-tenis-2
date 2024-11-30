@@ -1,14 +1,15 @@
-import { CarroI } from "./carros"
-import { ClienteI } from "./clientes"
+import {TenisI} from "./sapatos";
+import {ClienteI} from "./clientes";
 
 export interface PropostaI {
-  id: number
-  clienteId: string
-  cliente: ClienteI
-  carroId: number
-  carro: CarroI
-  descricao: string
-  resposta: string | null
-  createdAt: string
-  updatedAt: string | null
+  id: number;
+  clienteId: string;
+  cliente: ClienteI;
+  tenisId: number;
+  tenis: TenisI;
+  tamanho: string;
+  descricao: string;
+  resposta: string | null;
+  createdAt: string;
+  updatedAt: string | null;
 }

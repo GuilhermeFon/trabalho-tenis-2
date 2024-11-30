@@ -20,7 +20,7 @@ export default function RootLayout({
     } else {
       router.replace("/")
     }
-  }, [])
+  }, [router])
 
   return (
     <>

@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import "./globals.css";
-import { Toaster } from 'sonner'
+import {Toaster} from "sonner";
 
 export const metadata: Metadata = {
-  title: "Admin: Revenda Avenida",
-  description: "Área Administrativa da Revenda Admin",
+  title: "Loja da Pegada",
+  description: "Loja de tenis em Pelotas - RS",
+  keywords: ["loja", "tenis", "sapatos"],
 };
 
 export default function RootLayout({

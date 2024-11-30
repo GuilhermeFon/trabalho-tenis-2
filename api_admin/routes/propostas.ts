@@ -58,13 +58,13 @@ async function enviaEmail(
   const info = await transporter.sendMail({
     from: "edeciofernando@gmail.com", // sender address
     to: email, // list of receivers
-    subject: "Re: Proposta Revenda Avenida", // Subject line
+    subject: "Re: Reserva Loja da Pegada", // Subject line
     text: resposta, // plain text body
     html: `<h3>Estimado Cliente: ${nome}</h3>
-           <h3>Proposta: ${tamanho}</h3>
-           <h3>Resposta da Revenda: ${resposta}</h3>
+           <h3>Tamanho: ${tamanho}</h3>
+           <h3>Resposta da loja: ${resposta}</h3>
            <p>Muito obrigado pelo seu contato</p>
-           <p>Revenda Avenida</p>`,
+           <p>Loja da Pegada</p>`,
   });
 
   console.log("Message sent: %s", info.messageId);
