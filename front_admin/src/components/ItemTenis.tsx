@@ -1,8 +1,9 @@
 "use client";
 import {Dispatch, SetStateAction} from "react";
 import {TiDeleteOutline} from "react-icons/ti";
-import {FaRegStar} from "react-icons/fa";
+import {FaRegStar, FaStar} from "react-icons/fa";
 import Cookies from "js-cookie";
+import {toast} from "sonner";
 import {TenisI} from "@/utils/types/sapatos";
 
 interface listaTenisProps {
@@ -29,9 +30,9 @@ function ItemTenis({tenis, sapatos, setSapatos}: listaTenisProps) {
       if (response.status == 200) {
         const sapatos2 = sapatos.filter((x) => x.id != tenis.id);
         setSapatos(sapatos2);
-        alert("Tênis excluído com sucesso");
+        toast.success("Tênis excluído com sucesso");
       } else {
-        alert("Erro... Tênis não foi excluído");
+        toast.error("Erro... Tênis não foi excluído");
       }
     }
   }
@@ -92,11 +93,19 @@ function ItemTenis({tenis, sapatos, setSapatos}: listaTenisProps) {
           onClick={excluirTenis}
         />
         &nbsp;
-        <FaRegStar
-          className="text-3xl text-yellow-600 inline-block cursor-pointer"
-          title="Destacar"
-          onClick={alterarDestaque}
-        />
+        {tenis.destaque ? (
+          <FaStar
+            className="text-3xl text-yellow-600 inline-block cursor-pointer"
+            title="Remover Destaque"
+            onClick={alterarDestaque}
+          />
+        ) : (
+          <FaRegStar
+            className="text-3xl text-yellow-600 inline-block cursor-pointer"
+            title="Destacar"
+            onClick={alterarDestaque}
+          />
+        )}
       </td>
     </tr>
   );
