@@ -81,7 +81,7 @@ export default function Principal() {
           <span className="bg-green-100 text-green-800 text-xl text-center font-bold mx-auto block px-2.5 py-5 rounded dark:bg-green-900 dark:text-green-300">
             {dados.propostas}
           </span>
-          <p className="font-bold mt-2 text-center">Nº Propostas</p>
+          <p className="font-bold mt-2 text-center">Nº Reservas</p>
         </div>
       </div>
 
