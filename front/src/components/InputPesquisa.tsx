@@ -1,6 +1,7 @@
 import {TenisI} from "@/utils/types/tenis"; // Alterado para refletir o tipo de tênis
 import {useForm} from "react-hook-form";
 import {toast} from "sonner";
+import {useState} from "react";
 
 type Inputs = {
   termo: string;
@@ -12,9 +13,9 @@ type InputPesquisaProps = {
 
 export function InputPesquisa({setTenis}: InputPesquisaProps) {
   const {register, handleSubmit, reset} = useForm<Inputs>();
+  const [mostrandoDestaques, setMostrandoDestaques] = useState(false);
 
   async function enviaPesquisa(data: Inputs) {
-    //    alert(data.termo)
     if (data.termo.length < 2) {
       toast.warning("Digite, no mínimo, 2 caracteres para pesquisa");
       return;
@@ -34,7 +35,18 @@ export function InputPesquisa({setTenis}: InputPesquisaProps) {
   async function mostraDestaques() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sapatos`); // Alterado o endpoint para "tenis"
     const dados = await response.json();
-    setTenis(dados); // Ajustado para tênis
+    if (mostrandoDestaques) {
+      setTenis(dados); // Mostrar todos os tênis
+      setMostrandoDestaques(false);
+    } else {
+      const tenisDestaque = dados.filter((tenis: TenisI) => tenis.destaque);
+      if (tenisDestaque.length === 0) {
+        toast.error("Não há tênis em destaque");
+      } else {
+        setTenis(tenisDestaque); // Ajustado para tênis
+      }
+      setMostrandoDestaques(true);
+    }
     reset({termo: ""});
   }
 
@@ -87,7 +99,7 @@ export function InputPesquisa({setTenis}: InputPesquisaProps) {
         className="ms-3 mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
         onClick={mostraDestaques}
       >
-        Tênis em Destaque
+        {mostrandoDestaques ? "Visualizar Todos" : "Tênis em Destaque"}
       </button>
     </section>
   );
